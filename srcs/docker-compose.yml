@@ -19,11 +19,7 @@ services:
     build: 
       context: ./requirements/wordpress
       network: host
-      args:
-        - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
     restart: unless-stopped
-    ports: 
-      - 9000
     networks:
       - my_awesome_network
     volumes:
@@ -37,15 +33,36 @@ services:
     build: 
       context: ./requirements/mariadb
       network: host
-    # restart: unless-stopped
-    ports: 
-      - 3306
+    restart: unless-stopped
     networks:
       - my_awesome_network
     volumes:
       - db_data:/var/lib/mysql
     env_file:
       - .env
+  redis:
+    build:
+      context: ./requirements/mariadb
+      network: host
+    restart: unless-stopped
+    networks:
+      - my_awesome_network
+
+  ftp:
+    build: ./requirements/bonus/ftp/.
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_data:/home/sami/ftp/files
+    env_file:
+      - .env
+    ports:
+      - "21:21"
+      - "20:20"
+      - "40000-40005:40000-40005"
+    networks:
+      - my_awesome_network
+    # restart: always
 
 
 volumes:
