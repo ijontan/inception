@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx:
     build: 
@@ -50,6 +48,7 @@ services:
 
   ftp:
     build: ./requirements/bonus/ftp/.
+    restart: unless-stopped
     depends_on:
       - wordpress
     volumes:
@@ -61,7 +60,23 @@ services:
       - "21100-21110:21100-21110"
     networks:
       - my_awesome_network
-    # restart: always
+
+  adminer:
+    build: ./requirements/bonus/adminer/.
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    networks:
+      - my_awesome_network
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
 
 
 volumes:

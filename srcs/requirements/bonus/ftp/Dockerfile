@@ -4,4 +4,5 @@ RUN apt -y update && apt install -y vsftpd
 COPY ./conf/vsftpd.conf /
 COPY ./tools/setup.sh /
 RUN chmod 777 /setup.sh
+STOPSIGNAL SIGQUIT
 CMD [ "/setup.sh" ]
