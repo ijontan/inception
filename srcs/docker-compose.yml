@@ -77,6 +77,14 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  static:
+    build: ./requirements/bonus/static/.
+    restart: unless-stopped
+    expose:
+      - "8080:8080"
+    networks:
+      - my_awesome_network
+
 
 
 volumes:
