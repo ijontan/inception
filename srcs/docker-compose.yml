@@ -80,12 +80,8 @@ services:
   static:
     build: ./requirements/bonus/static/.
     restart: unless-stopped
-    expose:
-      - "8080:8080"
-    networks:
-      - my_awesome_network
-
-
+    ports:
+      - "8081:8081/tcp"
 
 volumes:
   db_data:

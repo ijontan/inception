@@ -9,7 +9,9 @@ WORKDIR /var/www/html/
 RUN git clone https://github.com/ijontan/webserv.git
 
 WORKDIR /var/www/html/webserv
+COPY ./config/ .
 RUN make
 
-CMD [ "./webserv", "./config_files/default.conf"]
+EXPOSE 8081
+CMD [ "./webserv", "config.conf"]
 
