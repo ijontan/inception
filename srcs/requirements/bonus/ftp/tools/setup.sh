@@ -28,4 +28,4 @@ cp /vsftpd.conf /etc/
 # service vsftpd stop
 
 echo "done"
-/usr/sbin/vsftpd /etc/vsftpd.conf
+exec /usr/sbin/vsftpd /etc/vsftpd.conf
